@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+  <header>
+    <h1><%= title %></h1>
+  </header>
+  <div>
+    <table>
+      <% for(var i in content) { %>
+        <tr>
+          <% var obj = content[i]; %>
+          <th><%= obj.id %></th>
+          <td><%= obj.content %></td>
+        </tr>
+      <% } %>
+    </table>
+  </div>
+</body>
+</html>

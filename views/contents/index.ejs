@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+  <header>
+    <h1><%= title %></h1>
+  </header>
+  <div class="container">
+    <% for (content of contents) { %>
+      <div class="content">
+        <strong><a href="<%=content.link%>"><%= content.title %></a></strong>
+        <p><%= content.description %></p>
+        <img src="<%=content.image%>" alt="">
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
+
+<style>
+  .container {
+    width: 70%;
+    margin: auto;
+  }
+  .content {
+    text-align: center;
+    margin-bottom: 100px;
+  }
+</style>

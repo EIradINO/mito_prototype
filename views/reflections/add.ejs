@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+  <header>
+    <h1><%= title %></h1>
+  </header>
+  <div>
+    <form method="post" action="/reflections/add">
+      <div>
+        <label for="content">CONTENT</label>
+        <input type="text" name="content" id="content">
+      </div>
+      <input type="submit" value="作成">
+    </form>
+  </div>
+</body>
+</html>
