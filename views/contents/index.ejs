@@ -9,13 +9,15 @@
     <h1><%= title %></h1>
   </header>
   <div class="container">
-    <% for (content of contents) { %>
-      <div class="content">
-        <strong><a href="<%=content.link%>"><%= content.title %></a></strong>
-        <p><%= content.description %></p>
-        <img src="<%=content.image%>" alt="">
-      </div>
-    <% } %>
+    <ol>
+      <% for (content of contents) { %>
+        <div class="content">
+          <li><strong><a href="<%=content.link%>"><%= content.title %></a></strong></li>
+          <p><%= content.description %></p>
+          <img src="<%=content.image%>" alt="">
+        </div>
+      <% } %>
+    </ul>
   </div>
 </body>
 </html>
