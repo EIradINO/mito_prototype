@@ -33,17 +33,73 @@ router.get('/search', (req, res, next) => {
       })
     }
 
-    wordlist = ["空", "青い", "の", "気"]
-    for (word of wordlist) {
-      const r = index.search(word, {
+    wordList = ["発芽", "肥料", "空気", "成長"]
+
+    searchResult = []
+    for (word of wordList) {
+      const resultList = index.search(word, {
         fields: {
           title: {boost: 1},
-          description: {boost: 1},
+          description: {boost: 2},
         },
         expand: true,
       });
-      console.log(r);
+      searchResult.push(resultList)
     }
+
+    contentList = []
+    scoreList = []
+    for (i in searchResult) {
+      contentList = contentList.concat(searchResult[i].map(obj => obj.ref))
+      scoreList = scoreList.concat(searchResult[i].map(obj => obj.score))
+    }
+
+    duplicateCount = {}
+    for (var i = 0; i < contentList.length; i++) {
+      var elm = contentList[i];
+      duplicateCount[elm] = (duplicateCount[elm] || 0) + 1;
+    }
+
+    for (times = wordList.length; times > 1; times--) {
+      duplicateList = Object.keys(duplicateCount).filter(num => duplicateCount[num] == times)
+
+      function indexofall(num) {
+        scr = []
+        element = num
+        idx = contentList.indexOf(element)
+        while (idx != -1) {
+          scr.push(idx)
+          idx = contentList.indexOf(element, idx + 1)
+        }
+        return scr;
+      }
+
+      results = []
+      j = 0;
+      for (elm of duplicateList) {
+        indexes = indexofall(elm)
+        sc = 0
+        for (i of indexes) {
+          sc += scoreList[i]
+        }
+        results.push({ ref: duplicateList[j], score: sc })
+        j++;
+      }
+
+      results.sort(function (a, b) {
+        if (a.score > b.score) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      resultContent = []
+      for (result of results) {
+        resultContent.push(index.documentStore.docs[result.ref])
+      }
+      console.log(resultContent);
+    }
+
     res.render('contents/search', { title: 'Search' })
   })
 })
