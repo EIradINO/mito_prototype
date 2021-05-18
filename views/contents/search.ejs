@@ -5,6 +5,19 @@
   <title><%= title %></title>
 </head>
 <body>
-
+  <header>
+    <h1><%= title %></h1>
+  </header>
+  <div class="container">
+    <ol>
+      <% for (content of contents) { %>
+        <div class="content">
+          <li><strong><a href="<%=content.link%>"><%= content.title %></a></strong></li>
+          <p><%= content.description %></p>
+          <img src="<%=content.image%>" alt="">
+        </div>
+      <% } %>
+    </ol>
+  </div>
 </body>
 </html>

@@ -20,6 +20,8 @@ router.get('/search', (req, res, next) => {
     this.use(elasticlunr.jp);
     this.addField('title');
     this.addField('description');
+    this.addField('link');
+    this.addField('image');
     this.setRef('id');
   });
   db.Content.findAll().then(cts => {
@@ -30,6 +32,8 @@ router.get('/search', (req, res, next) => {
         "id": i,
         "title": content.title,
         "description": content.description,
+        "link": content.link,
+        "image": content.image,
       })
     }
 
@@ -59,6 +63,8 @@ router.get('/search', (req, res, next) => {
       var elm = contentList[i];
       duplicateCount[elm] = (duplicateCount[elm] || 0) + 1;
     }
+
+    resultContent = []
 
     for (times = wordList.length; times > 1; times--) {
       duplicateList = Object.keys(duplicateCount).filter(num => duplicateCount[num] == times)
@@ -93,14 +99,20 @@ router.get('/search', (req, res, next) => {
           return 1;
         }
       });
-      resultContent = []
       for (result of results) {
         resultContent.push(index.documentStore.docs[result.ref])
       }
-      console.log(resultContent);
     }
 
-    res.render('contents/search', { title: 'Search' })
+    console.log(resultContent);
+
+    var data = {
+      title: 'Search',
+      contents: resultContent
+    }
+
+
+    res.render('contents/search', data)
   })
 })
 
