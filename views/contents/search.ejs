@@ -9,12 +9,29 @@
     <h1><%= title %></h1>
   </header>
   <div class="container">
+    <table>
+      <% for(var i in reflections) { %>
+        <tr>
+          <% var obj = reflections[i]; %>
+          <th><%= obj.id %></th>
+          <td><%= obj.content %></td>
+        </tr>
+      <% } %>
+    </table>
+    <form method="post" action="/contents/search">
+      <div>
+        <label for="content">CONTENT</label>
+        <input type="text" name="content" id="content">
+      </div>
+      <input type="submit" value="作成">
+    </form>
+    <p><%= none %></p>
     <ol>
-      <% for (content of contents) { %>
+      <% for (result of results) { %>
         <div class="content">
-          <li><strong><a href="<%=content.link%>"><%= content.title %></a></strong></li>
-          <p><%= content.description %></p>
-          <img src="<%=content.image%>" alt="">
+          <li><strong><a href="<%=result.link%>"><%= result.title %></a></strong></li>
+          <p><%= result.description %></p>
+          <img src="<%=result.image%>" alt="">
         </div>
       <% } %>
     </ol>

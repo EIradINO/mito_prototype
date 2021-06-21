@@ -5002,7 +5002,7 @@ module.exports = {
         image: "https://www.nhk.or.jp/das/image/D0005300/D0005300054_00000_S_001.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
     ], {});
   },
 
